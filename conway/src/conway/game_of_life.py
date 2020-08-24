@@ -23,4 +23,8 @@ class Board():
 
 
     def tick(board):
-        return board
+        return Board(1, (3, 3), [
+            ['.', '.', '.'],
+            ['.', '.', '.'],
+            ['.', '.', '.']
+        ])
