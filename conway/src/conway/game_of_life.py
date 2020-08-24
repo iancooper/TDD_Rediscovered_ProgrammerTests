@@ -18,5 +18,9 @@ class Board():
         if isinstance(other, Board):
             return (self._size == other._size) and (self._cells == other._cells)
 
+    def __repr__(self):
+        return f'Board({self._generation!r}, {self._size!r}, {self._cells!r}'
+
+
     def tick(board):
         return board
