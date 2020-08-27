@@ -32,31 +32,41 @@ class Board():
                     next_board[i].append('.')
                     live_neighbour_count = 0
 
-                    if i - 1 >= 0:
-                        if (j - 1 >= 0) and (self._cells[(i - 1)][(j - 1)] == '*'):
+                    same_column = j
+                    prior_column = same_column - 1
+                    next_column = same_column + 1
+                    last_column = self._size[1] - 1
+
+                    same_row = i
+                    prior_row = same_row - 1
+                    next_row = same_row + 1
+                    last_row = self._size[0] - 1
+
+                    if prior_row >= 0:
+                        if (prior_column >= 0) and (self._cells[(prior_row)][(prior_column)] == '*'):
                             live_neighbour_count += 1
 
-                        if self._cells[(i - 1)][j] == '*':
+                        if self._cells[(prior_row)][same_column] == '*':
                             live_neighbour_count += 1
 
-                        if (j + 1 <= self._size[1] - 1) and (self._cells[(i - 1)][(j + 1)] == '*'):
+                        if (next_column <= last_column) and (self._cells[(prior_row)][(next_column)] == '*'):
                             live_neighbour_count += 1
 
                     if i == i: # always true - readability
-                        if (j - 1 >= 0) and (self._cells[i][(j - 1)] == '*'):
+                        if (prior_column >= 0) and (self._cells[i][(prior_column)] == '*'):
                             live_neighbour_count += 1
 
-                        if (j + 1 <= self._size[1] - 1) and (self._cells[i][(j + 1)] == '*'):
+                        if (next_column <= last_column) and (self._cells[i][(next_column)] == '*'):
                             live_neighbour_count += 1
 
-                    if i + 1 <= self._size[0] - 1:
-                        if (j - 1 <= 0) and (self._cells[(i + 1)][(j - 1)] == '*'):
+                    if next_row <= last_row:
+                        if (prior_column <= 0) and (self._cells[(next_row)][(prior_column)] == '*'):
                             live_neighbour_count += 1
 
-                        if self._cells[(i + 1)][j] == '*':
+                        if self._cells[(next_row)][same_column] == '*':
                             live_neighbour_count += 1
 
-                        if (j + 1 <= self._size[1] - 1) and (self._cells[(i + 1)][(j + 1)] == '*'):
+                        if (next_column <= last_column) and (self._cells[(next_row)][(next_column)] == '*'):
                             live_neighbour_count += 1
 
                     if live_neighbour_count == 2:
