@@ -7,7 +7,7 @@ Notes:
 from typing import List, Tuple
 
 
-class Board():
+class Board:
     """ A game board for the game of life, should be immutable"""
 
     def __init__(self, generation: int, size: Tuple[int, int], cells: List[List[str]]):
@@ -22,7 +22,7 @@ class Board():
     def __repr__(self):
         return f'Board({self._generation!r}, {self._size!r}, {self._cells!r}'
 
-    def tick(self):
+    def tick(self) -> 'Board':
         next_board = []
         for i in range(self._size[0]):
             next_board.append([])
@@ -30,45 +30,7 @@ class Board():
                 cell = self._cells[i][j]
                 if cell == '*':
                     next_board[i].append('.')
-                    live_neighbour_count = 0
-
-                    same_column = j
-                    prior_column = same_column - 1
-                    next_column = same_column + 1
-                    last_column = self._size[1] - 1
-
-                    same_row = i
-                    prior_row = same_row - 1
-                    next_row = same_row + 1
-                    last_row = self._size[0] - 1
-
-                    if prior_row >= 0:
-                        if (prior_column >= 0) and (self._cells[(prior_row)][(prior_column)] == '*'):
-                            live_neighbour_count += 1
-
-                        if self._cells[(prior_row)][same_column] == '*':
-                            live_neighbour_count += 1
-
-                        if (next_column <= last_column) and (self._cells[(prior_row)][(next_column)] == '*'):
-                            live_neighbour_count += 1
-
-                    if i == i: # always true - readability
-                        if (prior_column >= 0) and (self._cells[i][(prior_column)] == '*'):
-                            live_neighbour_count += 1
-
-                        if (next_column <= last_column) and (self._cells[i][(next_column)] == '*'):
-                            live_neighbour_count += 1
-
-                    if next_row <= last_row:
-                        if (prior_column <= 0) and (self._cells[(next_row)][(prior_column)] == '*'):
-                            live_neighbour_count += 1
-
-                        if self._cells[(next_row)][same_column] == '*':
-                            live_neighbour_count += 1
-
-                        if (next_column <= last_column) and (self._cells[(next_row)][(next_column)] == '*'):
-                            live_neighbour_count += 1
-
+                    live_neighbour_count = _Neigbours(i, j, self._size).get_count(self._cells)
                     if live_neighbour_count == 2:
                         next_board[i][j] = '*'
 
@@ -76,3 +38,60 @@ class Board():
                     next_board[i].append('.')
 
         return Board(self._generation + 1, self._size, next_board)
+
+
+class _Neigbours:
+    def __init__(self, row: int, col: int, size: Tuple[int, int]):
+        self._size = size
+        self._same_column = col
+        self._prior_column = col - 1
+        self._next_column = col + 1
+        self._last_column = self._size[1] - 1
+
+        self._same_row = row
+        self._prior_row = row - 1
+        self._next_row = row + 1
+        self._last_row = self._size[0] - 1
+
+    def get_count(self, cells: List[List[str]]) -> int:
+        live_neighbour_count = self.prior_row_count(cells)
+
+        live_neighbour_count += self.same_row_count(cells)
+
+        live_neighbour_count += self.next_row_count(cells)
+
+        return live_neighbour_count
+
+    def next_row_count(self, cells):
+        live_neighbour_count = 0
+        if self._next_row <= self._last_row:
+            if (self._prior_column <= 0) and (cells[self._next_row][self._prior_column] == '*'):
+                live_neighbour_count += 1
+
+            if cells[self._next_row][self._same_column] == '*':
+                live_neighbour_count += 1
+
+            if (self._next_column <= self._last_column) and (cells[self._next_row][self._next_column] == '*'):
+                live_neighbour_count += 1
+        return live_neighbour_count
+
+    def same_row_count(self, cells):
+        live_neighbour_count = 0
+        if (self._prior_column >= 0) and (cells[self._same_row][self._prior_column] == '*'):
+            live_neighbour_count += 1
+        if (self._next_column <= self._last_column) and (cells[self._same_row][self._next_column] == '*'):
+            live_neighbour_count += 1
+        return live_neighbour_count
+
+    def prior_row_count(self, cells):
+        live_neighbour_count = 0
+        if self._prior_row >= 0:
+            if (self._prior_column >= 0) and (cells[self._prior_row][(self._prior_column)] == '*'):
+                live_neighbour_count += 1
+
+            if cells[self._prior_row][self._same_column] == '*':
+                live_neighbour_count += 1
+
+            if (self._next_column <= self._last_column) and (cells[self._prior_row][self._next_column] == '*'):
+                live_neighbour_count += 1
+        return live_neighbour_count
