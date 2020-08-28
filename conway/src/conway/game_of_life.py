@@ -30,17 +30,20 @@ class Board:
                 cell = self._cells[i][j]
                 if cell == '*':
                     next_board[i].append('.')
-                    live_neighbour_count = _Neigbours(i, j, self._size).get_count(self._cells)
-                    if live_neighbour_count == 2:
+                    live_neighbour_count = _Neighbours(i, j, self._size).get_count(self._cells)
+                    if live_neighbour_count == 2 or live_neighbour_count == 3:
                         next_board[i][j] = '*'
 
                 else:
                     next_board[i].append('.')
+                    live_neighbour_count = _Neighbours(i, j, self._size).get_count(self._cells)
+                    if live_neighbour_count == 3:
+                        next_board[i][j] = '*'
 
         return Board(self._generation + 1, self._size, next_board)
 
 
-class _Neigbours:
+class _Neighbours:
     def __init__(self, row: int, col: int, size: Tuple[int, int]):
         self._size = size
         self._same_column = col
@@ -65,7 +68,7 @@ class _Neigbours:
     def next_row_count(self, cells):
         live_neighbour_count = 0
         if self._next_row <= self._last_row:
-            if (self._prior_column <= 0) and (cells[self._next_row][self._prior_column] == '*'):
+            if (self._prior_column >= 0) and (cells[self._next_row][self._prior_column] == '*'):
                 live_neighbour_count += 1
 
             if cells[self._next_row][self._same_column] == '*':
