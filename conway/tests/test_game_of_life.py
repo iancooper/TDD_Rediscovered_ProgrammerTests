@@ -87,6 +87,7 @@ def test_an_adjacent_cell_with_sufficient_neighbours_lives():
 
 
 def test_three_live_neighbours_live_four_live_neighbours_die():
+    """ Only cells with two or three live neighbours survive a generation"""
     seed = Board(0, (3, 3), [
         ['.', '*', '.'],
         ['*', '*', '*'],
@@ -105,6 +106,8 @@ def test_three_live_neighbours_live_four_live_neighbours_die():
 
 
 def test_cells_positioned_at_the_edge():
+    """ We consider neighbours outside the grid to be dead """
+
     seed = Board(0, (3, 3), [
         ['*', '*', '*'],
         ['*', '.', '*'],

@@ -13,6 +13,8 @@ class Board:
     def __init__(self, generation: int, size: Tuple[int, int], cells: List[List[str]]):
         self._generation = generation
         self._size = size
+        self._rows = self._size[0]
+        self._cols = self._size[1]
         self._cells = cells
 
     def __eq__(self, other):
@@ -24,26 +26,31 @@ class Board:
 
     def tick(self) -> 'Board':
         next_board = []
-        for i in range(self._size[0]):
+        for row in range(self._rows):
             next_board.append([])
-            for j in range(self._size[1]):
-                cell = self._cells[i][j]
+            for col in range(self._cols):
+                cell = self._cells[row][col]
                 if cell == '*':
-                    next_board[i].append('.')
-                    live_neighbour_count = _Neighbours(i, j, self._size).get_count(self._cells)
+                    next_board[row].append('.')
+                    live_neighbour_count = _Neighbours(row, col, self._size).get_count(self._cells)
                     if live_neighbour_count == 2 or live_neighbour_count == 3:
-                        next_board[i][j] = '*'
+                        next_board[row][col] = '*'
 
                 else:
-                    next_board[i].append('.')
-                    live_neighbour_count = _Neighbours(i, j, self._size).get_count(self._cells)
+                    next_board[row].append('.')
+                    live_neighbour_count = _Neighbours(row, col, self._size).get_count(self._cells)
                     if live_neighbour_count == 3:
-                        next_board[i][j] = '*'
+                        next_board[row][col] = '*'
 
         return Board(self._generation + 1, self._size, next_board)
 
 
 class _Neighbours:
+    """A neighbour calculator for a cell in a grid
+    * It finds neigbours north, north-east, east, south-east, south, south-west, west, and north-west
+    * It counts the number of those nieghbours that are live
+    * it does not count neighbours beyond the borders of the grid, effectively treating them as dead
+    """
     def __init__(self, row: int, col: int, size: Tuple[int, int]):
         self._size = size
         self._same_column = col
