@@ -70,14 +70,14 @@ def test_an_adjacent_cell_with_sufficient_neighbours_lives():
     """ Just one cell is live, and it has no neighbours, so must die"""
 
     seed = Board(0, (3, 3), [
+        ['.', '.', '*'],
         ['.', '*', '.'],
-        ['.', '*', '.'],
-        ['.', '*', '.']
+        ['*', '.', '.']
     ])
 
     expected_generation_one = Board(1, (3, 3), [
         ['.', '.', '.'],
-        ['*', '*', '*'],
+        ['.', '*', '.'],
         ['.', '.', '.']
     ])
 
