@@ -77,7 +77,7 @@ def test_an_adjacent_cell_with_sufficient_neighbours_lives():
 
     expected_generation_one = Board(1, (3, 3), [
         ['.', '.', '.'],
-        ['.', '*', '.'],
+        ['*', '*', '*'],
         ['.', '.', '.']
     ])
 
