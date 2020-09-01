@@ -13,9 +13,8 @@ class Board:
     def __init__(self, generation: int, size: Tuple[int, int], cells: List[List[str]]):
         self._generation = generation
         self._size = size
-        # self._rows = self._size[0]
+        # self._rows = self._size[0] -- removing the size parameter would change public interface and is unsafe
         self._cols = self._size[1]
-        # self._cells = cells
         self._rows = [_Row(r) for r in cells]
 
     def __eq__(self, other):
@@ -40,11 +39,15 @@ class Board:
                     if live_neighbour_count == 3:
                         next_board[row][col] = '*'
 
+        grid = self._board_to_gird(next_board)
+
+        return Board(self._generation + 1, self._size, grid)
+
+    def _board_to_gird(self, next_board):
         grid = []
         for i in range(len(next_board)):
             grid.append(next_board[i].get_cells())
-
-        return Board(self._generation + 1, self._size, grid)
+        return grid
 
 
 class _Neighbours:
