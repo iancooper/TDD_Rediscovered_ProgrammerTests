@@ -72,8 +72,18 @@ class _Neighbours:
 
         return live_neighbour_count
 
-    def row_count(self, row: int, col:int):
-        pass
+    def row_count(self, row: int, cells: List[List[str]], exclude: bool):
+        live_neighbour_count = 0
+        if row <= self._last_row:
+            if (self._prior_column >= 0) and (cells[row][self._prior_column] == '*'):
+                live_neighbour_count += 1
+
+            if not exclude and cells[row][self._same_column] == '*':
+                live_neighbour_count += 1
+
+            if (self._next_column <= self._last_column) and (cells[row][self._next_column] == '*'):
+                live_neighbour_count += 1
+        return live_neighbour_count
 
     def next_row_count(self, cells):
         live_neighbour_count = 0
