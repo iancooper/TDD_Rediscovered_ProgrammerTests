@@ -16,7 +16,7 @@ class Board:
         # self._rows = self._size[0]
         self._cols = self._size[1]
         # self._cells = cells
-        self._rows = [_Row[r] for r in cells]
+        self._rows = [_Row(r) for r in cells]
 
     def __eq__(self, other):
         if isinstance(other, Board):
@@ -26,24 +26,25 @@ class Board:
         return f'Board({self._generation!r}, {self._size!r}, {self._rows!r}'
 
     def tick(self) -> 'Board':
-        next_board = []
+        next_board = [_Row(["." for c in range(self._cols)]) for r in self._rows]
         for row in range(len(self._rows)):
-            next_board.append([])
             for col in range(self._cols):
                 cell = self._rows[row][col]
                 if cell == '*':
-                    next_board[row].append('.')
                     live_neighbour_count = _Neighbours(row, col, self._size).get_count(self._rows)
                     if live_neighbour_count == 2 or live_neighbour_count == 3:
                         next_board[row][col] = '*'
 
                 else:
-                    next_board[row].append('.')
                     live_neighbour_count = _Neighbours(row, col, self._size).get_count(self._rows)
                     if live_neighbour_count == 3:
                         next_board[row][col] = '*'
 
-        return Board(self._generation + 1, self._size, next_board)
+        grid = []
+        for i in range(len(next_board)):
+            grid.append(next_board[i].get_cells())
+
+        return Board(self._generation + 1, self._size, grid)
 
 
 class _Neighbours:
@@ -108,6 +109,12 @@ class _Row:
             view.append(str(self._cells[i]))
         return "".join(view)
 
+    def get_cells(self) -> List[str]:
+        cells = []
+        for i in range(len(self._cells)):
+            cells.append(str(self._cells[i]))
+        return cells
+
 
 class _Cell:
     def __init__(self, val: str = "."):
@@ -115,3 +122,11 @@ class _Cell:
 
     def __str__(self):
         return self._state
+
+    def __eq__(self, other):
+        if isinstance(other, _Cell):
+            return self._state == other._state
+        elif isinstance(other, str):
+            return self._state == other
+
+
