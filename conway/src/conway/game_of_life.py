@@ -64,11 +64,11 @@ class _Neighbours:
         self._last_row = self._size[0] - 1
 
     def get_count(self, cells: List[List[str]]) -> int:
-        live_neighbour_count = self.prior_row_count(cells)
+        live_neighbour_count = self.row_count(self._prior_row, cells)
 
-        live_neighbour_count += self.same_row_count(cells)
+        live_neighbour_count += self.row_count(self._same_row, cells, True)
 
-        live_neighbour_count += self.next_row_count(cells)
+        live_neighbour_count += self.row_count(self._next_row, cells)
 
         return live_neighbour_count
 
