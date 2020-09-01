@@ -91,8 +91,22 @@ class _Row:
     def __init__(self, row: List[str]):
         self._cells = [_Cell(s) for s in row]
 
+    def __getitem__(self, key):
+        return self._cells[key]
+
+    def __setitem__(self, key, value):
+        self._cells[key] = value
+
+    def __repr__(self):
+        view = []
+        for i in range(len(self._cells)):
+            view.append(str(self._cells[i]))
+        return "".join(view)
+
 
 class _Cell:
     def __init__(self, val: str = "."):
         self._state = val
 
+    def __str__(self):
+        return self._state
