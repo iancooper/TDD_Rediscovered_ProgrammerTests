@@ -30,16 +30,16 @@ class Board:
         for row in range(len(self._rows)):
             next_board.append([])
             for col in range(self._cols):
-                cell = self._cells[row][col]
+                cell = self._rows[row][col]
                 if cell == '*':
                     next_board[row].append('.')
-                    live_neighbour_count = _Neighbours(row, col, self._size).get_count(self._cells)
+                    live_neighbour_count = _Neighbours(row, col, self._size).get_count(self._rows)
                     if live_neighbour_count == 2 or live_neighbour_count == 3:
                         next_board[row][col] = '*'
 
                 else:
                     next_board[row].append('.')
-                    live_neighbour_count = _Neighbours(row, col, self._size).get_count(self._cells)
+                    live_neighbour_count = _Neighbours(row, col, self._size).get_count(self._rows)
                     if live_neighbour_count == 3:
                         next_board[row][col] = '*'
 
@@ -65,7 +65,7 @@ class _Neighbours:
         self._next_row = row + 1
         self._last_row = self._size[0] - 1
 
-    def get_count(self, cells: List[List[str]]) -> int:
+    def get_count(self, cells: List['_Row']) -> int:
         live_neighbour_count = self.row_count(self._prior_row, cells)
 
         live_neighbour_count += self.row_count(self._same_row, cells, True)
