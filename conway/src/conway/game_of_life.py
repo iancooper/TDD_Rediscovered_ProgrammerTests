@@ -15,7 +15,8 @@ class Board:
         self._size = size
         self._rows = self._size[0]
         self._cols = self._size[1]
-        self._cells = cells
+        # self._cells = cells
+        self._rows = [_Row[r] for r in cells]
 
     def __eq__(self, other):
         if isinstance(other, Board):
@@ -90,6 +91,10 @@ class _Neighbours:
 class _Row:
     def __init__(self, row: List[str]):
         self._cells = [_Cell(s) for s in row]
+
+    def __eq__(self, other):
+        if isinstance(other, _Row):
+            return self._cells == other._cells
 
     def __getitem__(self, key):
         return self._cells[key]
