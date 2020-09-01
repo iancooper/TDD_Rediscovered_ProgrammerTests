@@ -72,7 +72,7 @@ class _Neighbours:
 
         return live_neighbour_count
 
-    def row_count(self, cells):
+    def row_count(self, row: int, col:int):
         pass
 
     def next_row_count(self, cells):
