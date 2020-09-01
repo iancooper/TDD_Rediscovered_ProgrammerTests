@@ -13,7 +13,10 @@ class Game:
         self._reader = reader
         self._writer = writer
 
-    def Play(self) -> None:
+    def Play(self, runs:int = 1) -> None:
         values = self._reader.read_seed_file()
-        self._writer(Board(values[0], values[1], values[2]))
-
+        board = Board(values[0], values[1], values[2])
+        self._writer(board)
+        for i in range(runs):
+            board = board.tick()
+            self._writer(board)

@@ -15,4 +15,15 @@ class Reader:
         with open(self._file_name, 'r') as file:
             seed = file.read()
 
-        return None
+        args = seed.split('\n')
+        generation = int(args[0][11:])
+        size = (int(args[1][0:1]), int(args[1][2:3]))
+        cells = []
+        rows = args[2:]
+        for r in range(len(rows)):
+            new_row = []
+            cells.append(new_row)
+            for c in range(len(rows[r])):
+                new_row.append(rows[r][c])
+
+        return generation, size, cells
