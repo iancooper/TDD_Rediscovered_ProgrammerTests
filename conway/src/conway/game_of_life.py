@@ -85,36 +85,3 @@ class _Neighbours:
                 live_neighbour_count += 1
         return live_neighbour_count
 
-    def next_row_count(self, cells):
-        live_neighbour_count = 0
-        if self._next_row <= self._last_row:
-            if (self._prior_column >= 0) and (cells[self._next_row][self._prior_column] == '*'):
-                live_neighbour_count += 1
-
-            if cells[self._next_row][self._same_column] == '*':
-                live_neighbour_count += 1
-
-            if (self._next_column <= self._last_column) and (cells[self._next_row][self._next_column] == '*'):
-                live_neighbour_count += 1
-        return live_neighbour_count
-
-    def same_row_count(self, cells):
-        live_neighbour_count = 0
-        if (self._prior_column >= 0) and (cells[self._same_row][self._prior_column] == '*'):
-            live_neighbour_count += 1
-        if (self._next_column <= self._last_column) and (cells[self._same_row][self._next_column] == '*'):
-            live_neighbour_count += 1
-        return live_neighbour_count
-
-    def prior_row_count(self, cells):
-        live_neighbour_count = 0
-        if self._prior_row >= 0:
-            if (self._prior_column >= 0) and (cells[self._prior_row][(self._prior_column)] == '*'):
-                live_neighbour_count += 1
-
-            if cells[self._prior_row][self._same_column] == '*':
-                live_neighbour_count += 1
-
-            if (self._next_column <= self._last_column) and (cells[self._prior_row][self._next_column] == '*'):
-                live_neighbour_count += 1
-        return live_neighbour_count
