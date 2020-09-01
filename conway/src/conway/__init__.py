@@ -5,6 +5,9 @@ Notes:
 """
 
 from conway.game_of_life import *
+from conway.board_writer import *
+from conway.seed_reader import *
+
 
 
 

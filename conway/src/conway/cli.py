@@ -7,7 +7,7 @@ Notes:
 import fire
 
 
-def play(seed="seed.txt", runs=1):
+def play(seed:str="seed.txt", runs:int=1):
     print(f"Reading {seed} and running {runs} iterations of Conway's game of Life")
 
 

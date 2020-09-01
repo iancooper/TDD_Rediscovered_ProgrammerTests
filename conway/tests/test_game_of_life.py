@@ -123,3 +123,21 @@ def test_cells_positioned_at_the_edge():
     generation_one = seed.tick()
 
     assert generation_one == expected_generation_one
+
+
+def test_that_we_can_render_a_board():
+    """To display the game at the command line we need to be able to render it"""
+    board = Board(0, (3, 3), [
+        ['*', '*', '*'],
+        ['*', '.', '*'],
+        ['*', '*', '*']
+    ])
+
+    expected_board = ("Generation 0\n"
+                      "3 3\n"
+                      "***\n"
+                      "*.*\n"
+                      "***\n"
+                      )
+
+    assert expected_board == str(board)

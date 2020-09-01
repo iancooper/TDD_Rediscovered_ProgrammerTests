@@ -21,6 +21,15 @@ class Board:
         if isinstance(other, Board):
             return (self._size == other._size) and (self._cells == other._cells)
 
+    def __str__(self):
+        view = [f"Generation {self._generation}\n", f"{self._rows} {self._cols}\n"]
+        for r in range(len(self._cells)):
+            for c in range(len(self._cells[r])):
+                view.append(self._cells[r][c])
+            view.append("\n")
+        return "".join(view)
+
+
     def __repr__(self):
         return f'Board({self._generation!r}, {self._size!r}, {self._cells!r}'
 
