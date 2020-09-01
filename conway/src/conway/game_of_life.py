@@ -72,6 +72,9 @@ class _Neighbours:
 
         return live_neighbour_count
 
+    def row_count(self, cells):
+        pass
+
     def next_row_count(self, cells):
         live_neighbour_count = 0
         if self._next_row <= self._last_row:
