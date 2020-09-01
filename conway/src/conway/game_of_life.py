@@ -72,7 +72,7 @@ class _Neighbours:
 
         return live_neighbour_count
 
-    def row_count(self, row: int, cells: List[List[str]], exclude: bool):
+    def row_count(self, row: int, cells: List[List[str]], exclude: bool = False):
         live_neighbour_count = 0
         if row <= self._last_row:
             if (self._prior_column >= 0) and (cells[row][self._prior_column] == '*'):
