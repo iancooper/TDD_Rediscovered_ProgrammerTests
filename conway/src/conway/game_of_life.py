@@ -51,6 +51,7 @@ class _Neighbours:
     * It counts the number of those nieghbours that are live
     * it does not count neighbours beyond the borders of the grid, effectively treating them as dead
     """
+
     def __init__(self, row: int, col: int, size: Tuple[int, int]):
         self._size = size
         self._same_column = col
@@ -84,4 +85,14 @@ class _Neighbours:
             if (self._next_column <= self._last_column) and (cells[row][self._next_column] == '*'):
                 live_neighbour_count += 1
         return live_neighbour_count
+
+
+class _Row:
+    def __init__(self, row: List[str]):
+        self._cells = [_Cell(s) for s in row]
+
+
+class _Cell:
+    def __init__(self, val: str = "."):
+        self._state = val
 
