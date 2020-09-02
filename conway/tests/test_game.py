@@ -30,4 +30,4 @@ def test_game_of_life():
 
     cmd.Play()
 
-    writer.assert_called_with(Board(0, (3, 3), [['.', '*', '.'], ['*', '*', '*'], ['.', '*', '.']]))
+    writer.assert_called_with(Board(0, (3, 3), [['*', '*', '*'], ['*', '.', '*'], ['*', '*', '*']]))
