@@ -16,3 +16,13 @@ The code was created as a kata, using the following rules:
 
 * When we discover that we need new collaborators by refactoring we ask: are they part of our public interface or an implementation detail. We don’t test implementation details
 
+## Branches
+
+The master branch is the output of the original kata.
+
+There are two branches:
+
+* Refactoring Steps: The commits here show various refactorings, which may be well advised (removing duplication) or ill-advised (intrdocuing a class hierachy). Their goal is to show that we can refactor details, without writing new tests around those details, if they are private.
+* Clean Architecture: This branch makes the code runnable. It seeks to demonstrate that the idea of Clean Architecure - adapaters, use cases, and entities - can be implemented straightforwardly, and let us separate the 'hard to test' concepts easily. Ultimately 'Game' here would be a good test target to drive TDD.
+
+
